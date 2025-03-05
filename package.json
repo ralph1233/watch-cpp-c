@@ -1,0 +1,20 @@
+{
+  "name": "c_cpp-watcher",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "cw": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "nodemon": "^3.1.9"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "A CLI tool to watch and compile C++ files"
+}
