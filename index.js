@@ -1,21 +1,30 @@
 #!/usr/bin/env node
 
-const { spawn } = require("child_process");
-const chokidar = require("chokidar");
-const readline = require("readline");
-const path = require("path");
-const os = require("os");
+import { spawn } from "child_process";
+import chokidar from "chokidar";
+import readline from "readline";
+import path from "path";
+import os from "os";
+import chalk from "chalk";
 
 // Ensure we have the correct number of arguments
 if (process.argv.length < 3) {
   console.error(
-    "Usage: cw <file.c or file.cpp> [compiler flags] [additional arguments]"
+    chalk.red(
+      "Usage: cw <file.c or file.cpp> [compiler flags] [additional arguments]"
+    )
   );
   process.exit(1);
 }
 
 // Get the file from the arguments and the rest as compiler flags and additional args
 const file = process.argv[2];
+
+if (!file.endsWith(".cpp") && !file.endsWith(".c")) {
+  console.error(chalk.red("Error: Only .cpp and .c files are supported."));
+  process.exit(1);
+}
+
 const compilerFlags = [];
 const additionalArgs = [];
 
@@ -29,12 +38,7 @@ while (i < process.argv.length && process.argv[i].startsWith("-")) {
 
 additionalArgs.push(...process.argv.slice(i, process.argv.length));
 
-if (!file.endsWith(".cpp") && !file.endsWith(".c")) {
-  console.error("Error: Only .cpp and .c files are supported.");
-  process.exit(1);
-}
-
-console.log(`Watching ${file} for changes...`);
+console.log(chalk.green(`Watching ${file} for changes...`));
 
 const outputFile =
   path.basename(file, path.extname(file)) +
@@ -42,7 +46,7 @@ const outputFile =
 
 // Function to compile and run the file
 const compileAndRun = () => {
-  console.log(`Compiling ${file}...`);
+  console.log(chalk.blue(`Compiling ${file}...`));
 
   // Determine whether to use gcc or g++ based on file extension
   const compiler = file.endsWith(".cpp") ? "g++" : "gcc";
@@ -57,13 +61,13 @@ const compileAndRun = () => {
   );
 
   compileProcess.stderr.on("data", (data) => {
-    console.error(`Compilation error: ${data.toString()}`);
+    console.error(chalk.red(`Compilation error: ${data.toString()}`));
   });
 
   compileProcess.on("close", (code) => {
     if (code === 0) {
-      console.log(`Compiled successfully: ${outputFile}`);
-      console.log("Running the program...\n");
+      console.log(chalk.green(`Compiled successfully: ${outputFile}`));
+      console.log(chalk.cyan("Running the program...\n"));
 
       // Pass additional arguments to the compiled program (argv[])
       const runProcess = spawn(
@@ -75,11 +79,13 @@ const compileAndRun = () => {
       );
 
       runProcess.on("close", () => {
-        console.log("\n\nType 'rs' and press Enter to restart the program"); // After the program finishes running, allow manual restart
+        console.log(
+          chalk.yellow("\nType 'rs' and press Enter to restart the program")
+        ); // After the program finishes running, allow manual restart
         enableRestart();
       });
     } else {
-      console.error("Compilation failed.");
+      console.error(chalk.red("Compilation failed."));
     }
   });
 };
@@ -93,7 +99,7 @@ const enableRestart = () => {
 
   rl.on("line", (input) => {
     if (input.trim() === "rs") {
-      console.log("Manual restart triggered...");
+      console.log(chalk.magenta("Manual restart triggered..."));
       compileAndRun();
       rl.close(); // Close readline interface after restart
     }
@@ -110,6 +116,6 @@ chokidar
     interval: 1000, // Polling interval (adjust as needed)
   })
   .on("change", () => {
-    console.log(`File ${file} changed! Recompiling...`);
+    console.log(chalk.yellow(`File ${file} changed! Recompiling...`));
     compileAndRun();
   });

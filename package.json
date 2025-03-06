@@ -2,6 +2,7 @@
   "name": "c_cpp-watcher",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "cw": "index.js"
   },
@@ -10,6 +11,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
+    "chalk": "^5.4.1",
     "chokidar": "^4.0.3",
     "nodemon": "^3.1.9"
   },
