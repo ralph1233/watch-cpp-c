@@ -1,6 +1,7 @@
 {
   "name": "c_cpp-watcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "A CLI tool to watch and compile C/C++ files automatically",
   "main": "index.js",
   "type": "module",
   "bin": {
@@ -15,8 +16,25 @@
     "chokidar": "^4.0.3",
     "nodemon": "^3.1.9"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "c",
+    "cpp",
+    "c++",
+    "compiler",
+    "watcher",
+    "development",
+    "cli",
+    "auto-compile"
+  ],
+  "author": "ralph1233",
   "license": "ISC",
-  "description": "A CLI tool to watch and compile C++ files"
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ralph1233/watch-cpp-c.git"
+  },
+  "homepage": "https://github.com/ralph1233/watch-cpp-c#readme",
+  "bugs": {
+    "url": "https://github.com/ralph1233/watch-cpp-c/issues"
+  }
 }
