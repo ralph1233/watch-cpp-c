@@ -90,9 +90,14 @@ const compileAndRun = () => {
   });
 };
 
-// Function to enable "rs" restart after program finishes running
+let rl; // Declare readline interface outside to keep track of it
+
 const enableRestart = () => {
-  const rl = readline.createInterface({
+  if (rl) {
+    rl.close(); // Close the previous instance before creating a new one
+  }
+
+  rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
@@ -101,7 +106,6 @@ const enableRestart = () => {
     if (input.trim() === "rs") {
       console.log(chalk.magenta("Manual restart triggered..."));
       compileAndRun();
-      rl.close(); // Close readline interface after restart
     }
   });
 };
