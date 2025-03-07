@@ -5,7 +5,6 @@ import chokidar from "chokidar";
 import readline from "readline";
 import path from "path";
 import os from "os";
-import fs from "fs";
 import chalk from "chalk";
 
 // Ensure we have the correct number of arguments
