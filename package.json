@@ -1,6 +1,6 @@
 {
   "name": "c_cpp-watcher",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A CLI tool to watch and compile C/C++ files automatically",
   "main": "index.js",
   "type": "module",
